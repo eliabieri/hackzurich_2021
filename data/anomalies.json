@@ -1,0 +1,10 @@
+{
+    "anomalies": [
+        {
+            "lat": 17.234,
+            "lon": 43.003,
+            "type": "ANTENNA_DEGRADATION",
+            "severeness": 0.8
+        }
+    ]
+}

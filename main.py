@@ -1,6 +1,8 @@
 from lib import constants
+from lib.analysis import DataAnalyzer
 from fastapi import FastAPI, Response, File, UploadFile, status
 from pathlib import Path
+import json
 
 app = FastAPI()
 
@@ -12,7 +14,7 @@ def appendCsvData(csvFile: Path, data: bytes) -> None:
 
 @app.get("/anomalies")
 async def anomalies():
-    return constants.ANOMALIES_FILE.open().read()
+    return json.loads(constants.ANOMALIES_FILE.open().read())
 
 @app.post("/data")
 async def data(
@@ -23,4 +25,5 @@ async def data(
     appendCsvData(constants.EVENTS_FILE, await events.read())
     appendCsvData(constants.DISRUPTIONS_FILE, await disruptions.read())
     appendCsvData(constants.RSSI_FILE, await rssi.read())
+    DataAnalyzer.analyzeData()
     response.status_code = status.HTTP_200_OK

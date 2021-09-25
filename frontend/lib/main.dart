@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/polyline.dart';
 import 'package:frontend/upload_dialog.dart';
 import 'package:frontend/widgets/marker.dart';
 import 'package:latlong2/latlong.dart';
@@ -90,13 +91,20 @@ class MyApp extends StatelessWidget {
                             mapController: _mapController,
                             options: MapOptions(
                               center: LatLng(47.32913856887063, 8.12325467579632),
-                              zoom: 10.0,
+                              zoom: 11.0,
                             ),
                             layers: [
                               TileLayerOptions(
                                 urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                 subdomains: ['a', 'b', 'c'],
                               ),
+                              PolylineLayerOptions(polylines: [
+                                Polyline(
+                                    points: polylineTrack,
+                                    color: Colors.deepPurple,
+                                    strokeWidth: 3.0,
+                                    isDotted: true)
+                              ]),
                               MarkerLayerOptions(
                                   markers: snapshot.data
                                           ?.where(

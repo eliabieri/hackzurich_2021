@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Siemens ZSL90 Predictive Maintenance",
       theme: ThemeData(primaryColor: siemensColor),
       home: Scaffold(
         appBar: AppBar(
@@ -34,10 +35,7 @@ class MyApp extends StatelessWidget {
                 );
               }
               if (snapshot.hasError) {
-                print(snapshot.error);
-                return const Center(
-                  child: Icon(Icons.error_outline),
-                );
+                return Center(child: Text(snapshot.error.toString()));
               }
               final data = jsonDecode(snapshot.data?.body ?? "") as Map<String, dynamic>;
               final anomalies =

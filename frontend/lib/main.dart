@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8.0),
               child: Builder(builder: (context) {
                 return IconButton(
-                  icon: const Icon(Icons.upload_file),
+                  icon: Icon(Icons.upload_file, color: siemensColor),
                   onPressed: () => showBarModalBottomSheet(
                       expand: false, context: context, builder: (context) => const UploadData()),
                 );

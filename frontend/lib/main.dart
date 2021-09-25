@@ -168,6 +168,7 @@ class MyApp extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
+                                    elevation: 20,
                                     child: IconButton(
                                       onPressed: () => _showFilterPopup(context, minSeverity),
                                       icon: const FaIcon(FontAwesomeIcons.filter,

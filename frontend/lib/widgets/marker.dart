@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/map_data_provider.dart';
 import 'package:latlong2/latlong.dart';
@@ -103,11 +104,11 @@ class AnomalyMarker extends Marker {
                       color: _colorFromSeverity(anomaly.severeness),
                       elevation: 15,
                       child: Center(
-                        child: FaIcon(
-                          anomaly.type == "INTERFERENCE"
-                              ? FontAwesomeIcons.broadcastTower
-                              : FontAwesomeIcons.waveSquare,
-                          size: 12.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: SvgPicture.asset(anomaly.type == "INTERFERENCE"
+                              ? "assets/interference.svg"
+                              : "assets/broken.svg"),
                         ),
                       ),
                     ),

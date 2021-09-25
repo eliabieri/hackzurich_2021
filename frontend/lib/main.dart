@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Text("ZSL90 Predictive Maintenance Tool",
+              Text("ZSL-90 Predictive Maintenance Platform",
                   style: TextStyle(color: siemensColor, fontSize: 14)),
             ],
           ),

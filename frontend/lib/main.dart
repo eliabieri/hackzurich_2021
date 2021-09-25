@@ -10,6 +10,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'map_data_provider.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mapData = MapDataProvider();
     return MaterialApp(
       title: "Siemens ZSL90 Predictive Maintenance",
       debugShowCheckedModeBanner: false,
@@ -44,10 +47,10 @@ class MyApp extends StatelessWidget {
             )
           ],
         ),
-        body: FutureBuilder(
-            future: http.get(Uri.parse("http://127.0.0.1:8000/anomalies")),
-            builder: (context, AsyncSnapshot<Response> snapshot) {
-              if (ConnectionState.done != snapshot.connectionState) {
+        body: StreamBuilder(
+            stream: mapData.mapDataStream,
+            builder: (context, AsyncSnapshot<List<Anomaly>> snapshot) {
+              if (ConnectionState.active != snapshot.connectionState) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -55,9 +58,6 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasError) {
                 return Center(child: Text(snapshot.error.toString()));
               }
-              final data = jsonDecode(snapshot.data?.body ?? "") as Map<String, dynamic>;
-              final anomalies =
-                  List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>));
               return Stack(
                 alignment: Alignment.center,
                 children: [
@@ -72,22 +72,23 @@ class MyApp extends StatelessWidget {
                         subdomains: ['a', 'b', 'c'],
                       ),
                       MarkerLayerOptions(
-                          markers: anomalies
-                              .map(
-                                (e) => Marker(
-                                  width: 80.0,
-                                  height: 80.0,
-                                  point: LatLng(e["lat"], e["lon"]),
-                                  builder: (ctx) {
-                                    final anomalyType = e["type"];
-                                    if ("INTERFERENCE" == anomalyType) {
-                                      return const FaIcon(FontAwesomeIcons.broadcastTower);
-                                    }
-                                    return const FaIcon(FontAwesomeIcons.waveSquare);
-                                  },
-                                ),
-                              )
-                              .toList()),
+                          markers: snapshot.data
+                                  ?.map(
+                                    (e) => Marker(
+                                      width: 80.0,
+                                      height: 80.0,
+                                      point: LatLng(e.lat, e.lon),
+                                      builder: (ctx) {
+                                        final anomalyType = e.type;
+                                        if ("INTERFERENCE" == anomalyType) {
+                                          return const FaIcon(FontAwesomeIcons.broadcastTower);
+                                        }
+                                        return const FaIcon(FontAwesomeIcons.waveSquare);
+                                      },
+                                    ),
+                                  )
+                                  .toList() ??
+                              []),
                     ],
                   ),
                   Positioned(

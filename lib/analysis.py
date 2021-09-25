@@ -2,8 +2,9 @@ from lib import constants
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
-import json
 from datetime import datetime
+import json
+import time
 
 class AnomalyType(str, Enum):
     ANTENNA_DEGRADATION = "ANTENNA_DEGRADATION"
@@ -29,6 +30,8 @@ class DataAnalyzer:
         disruptions = constants.DISRUPTIONS_FILE.open()
         events = constants.EVENTS_FILE.open()
         print("Analysis in progress")
+        time.sleep(20)
+        print("Analysis finished")
         ## TODO analysis
         anomalies: List[Anomaly] = [
             Anomaly(

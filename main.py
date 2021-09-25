@@ -2,6 +2,7 @@ from lib import constants
 from lib.analysis import DataAnalyzer
 from fastapi import FastAPI, Response, File, UploadFile, status
 from pathlib import Path
+import threading
 import json
 
 app = FastAPI()
@@ -28,5 +29,5 @@ async def data(
     appendCsvData(constants.EVENTS_FILE, await events.read())
     appendCsvData(constants.DISRUPTIONS_FILE, await disruptions.read())
     appendCsvData(constants.RSSI_FILE, await rssi.read())
-    DataAnalyzer.analyzeData()
+    threading.Thread(target=DataAnalyzer.analyzeData).start()
     response.status_code = status.HTTP_200_OK

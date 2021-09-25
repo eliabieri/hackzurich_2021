@@ -30,7 +30,7 @@ class DataAnalyzer:
         disruptions = constants.DISRUPTIONS_FILE.open()
         events = constants.EVENTS_FILE.open()
         print("Analysis in progress")
-        time.sleep(2)
+        time.sleep(4)
         print("Analysis finished")
         ## TODO analysis
         anomalies: List[Anomaly] = [
@@ -38,15 +38,22 @@ class DataAnalyzer:
                 lat=47.39562302092118,
                 lon=8.057479921589058,
                 type=AnomalyType.ANTENNA_DEGRADATION,
-                distanceOnTrack=49876,
+                distanceOnTrack=4976,
                 severeness=0.2
             ),
             Anomaly(
-                lat=47.30757390295709,
-                lon=8.080110130195234,
+                lat=47.331747691796565,
+                lon=8.054658027649117,
                 type=AnomalyType.INTERFERENCE,
-                distanceOnTrack=113095,
+                distanceOnTrack=11095,
                 severeness=0.8
+            ),
+            Anomaly(
+                lat=47.291918453508735,
+                lon=8.13126407479584,
+                type=AnomalyType.INTERFERENCE,
+                distanceOnTrack=31094,
+                severeness=0.6
             )
         ]
         cls._writeAnomalyFile(anomalies)

@@ -2,6 +2,7 @@ from lib import constants
 from lib.analysis import DataAnalyzer
 from fastapi import FastAPI, Response, File, UploadFile, status
 from pathlib import Path
+from rich import print
 import threading
 import json
 
@@ -10,10 +11,11 @@ app = FastAPI()
 def appendCsvData(csvFile: Path, data: bytes) -> None:
     with csvFile.open("a") as f:
         lines = data.decode('utf-8').splitlines()[1:]
-        f.writelines(lines)
+        f.write("\n")
+        f.writelines(f'{s}\n' for s in lines)
 
 @app.get("/anomalies")
-async def anomalies(response: Response):
+async def anomalies(response: Response) -> None:
     try:
         return json.loads(constants.ANOMALIES_FILE.open().read())
     except Exception as e:

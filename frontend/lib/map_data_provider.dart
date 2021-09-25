@@ -21,13 +21,17 @@ class MapDataProvider {
   }
 
   Future<void> updateData() async {
-    final resp = await http.get(Uri.parse("http://127.0.0.1:8000/anomalies"));
-    final data = jsonDecode(resp.body) as Map<String, dynamic>;
-    final anomalies = List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>))
-        .map((e) =>
-            Anomaly(lat: e["lat"], lon: e["lon"], type: e["type"], severeness: e["severeness"]))
-        .toList();
-    _controller?.add(anomalies);
+    try {
+      final resp = await http.get(Uri.parse("http://127.0.0.1:8000/anomalies"));
+      final data = jsonDecode(resp.body) as Map<String, dynamic>;
+      final anomalies = List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>))
+          .map((e) =>
+              Anomaly(lat: e["lat"], lon: e["lon"], type: e["type"], severeness: e["severeness"]))
+          .toList();
+      _controller?.add(anomalies);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Stream<List<Anomaly>>? get mapDataStream => _controller?.stream;

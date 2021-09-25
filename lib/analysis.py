@@ -1,8 +1,9 @@
 from lib import constants
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from enum import Enum
 from typing import List
 import json
+from datetime import datetime
 
 class AnomalyType(str, Enum):
     ANTENNA_DEGRADATION = "ANTENNA_DEGRADATION"
@@ -14,6 +15,7 @@ class Anomaly:
     lon: float
     type: AnomalyType
     severeness: float
+    detectedOn: datetime = datetime.now()
 
 class DataAnalyzer:
 
@@ -46,6 +48,13 @@ class DataAnalyzer:
     @staticmethod
     def _writeAnomalyFile(anomalies: List[Anomaly]) -> None:
         with constants.ANOMALIES_FILE.open("w") as f:
+            ## Ugly hack to serialize dataclass
             f.write(json.dumps({
-                "anomalies": [asdict(anomaly) for anomaly in anomalies]
+                "anomalies": [{
+                    "lat": anomaly.lat,
+                    "lon": anomaly.lon,
+                    "type": anomaly.type,
+                    "severeness": anomaly.severeness,
+                    "detectedOn": anomaly.detectedOn.isoformat(),
+                } for anomaly in anomalies]
             }))

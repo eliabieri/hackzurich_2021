@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/upload_dialog.dart';
-import 'package:http/http.dart';
+import 'package:frontend/widgets/marker.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'map_data_provider.dart';
@@ -27,7 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Siemens ZSL90 Predictive Maintenance",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: siemensColor),
+      theme: ThemeData(
+          primaryColor: siemensColor,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(siemensColor)))),
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Siemens ZSL90 Predictive Maintenance"),
@@ -72,23 +71,8 @@ class MyApp extends StatelessWidget {
                         subdomains: ['a', 'b', 'c'],
                       ),
                       MarkerLayerOptions(
-                          markers: snapshot.data
-                                  ?.map(
-                                    (e) => Marker(
-                                      width: 80.0,
-                                      height: 80.0,
-                                      point: LatLng(e.lat, e.lon),
-                                      builder: (ctx) {
-                                        final anomalyType = e.type;
-                                        if ("INTERFERENCE" == anomalyType) {
-                                          return const FaIcon(FontAwesomeIcons.broadcastTower);
-                                        }
-                                        return const FaIcon(FontAwesomeIcons.waveSquare);
-                                      },
-                                    ),
-                                  )
-                                  .toList() ??
-                              []),
+                          markers:
+                              snapshot.data?.map((e) => AnomalyMarker(anomaly: e)).toList() ?? []),
                     ],
                   ),
                   Positioned(

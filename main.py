@@ -12,8 +12,12 @@ def appendCsvData(csvFile: Path, data: bytes) -> None:
         f.writelines(lines)
 
 @app.get("/anomalies")
-async def anomalies():
-    return json.loads(constants.ANOMALIES_FILE.open().read())
+async def anomalies(response: Response):
+    try:
+        return json.loads(constants.ANOMALIES_FILE.open().read())
+    except Exception as e:
+        print(e)
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
 @app.post("/data")
 async def data(

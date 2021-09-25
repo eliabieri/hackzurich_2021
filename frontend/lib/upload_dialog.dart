@@ -10,11 +10,12 @@ class UploadData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(padding: const EdgeInsets.all(20), children: [
+        body: ListView(padding: const EdgeInsets.all(30), children: [
       Text(
         "Upload new data",
         style: Theme.of(context).textTheme.headline4,
       ),
+      const SizedBox(height: 40),
       ElevatedButton(
           onPressed: () async {
             final result = await FilePicker.platform.pickFiles(

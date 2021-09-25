@@ -39,6 +39,7 @@ dependencies:
   future_progress_dialog: ^0.2.0
   animations: ^2.0.1
   flutter_styled_toast: ^2.0.0
+  maps_launcher: ^2.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

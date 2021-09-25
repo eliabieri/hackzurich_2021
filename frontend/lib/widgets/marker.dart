@@ -29,7 +29,8 @@ class AnomalyMarker extends Marker {
               onTap: () => showDialog(
                   context: context,
                   builder: (context) => Dialog(
-                        child: Padding(
+                        child: Container(
+                          width: 300,
                           padding: const EdgeInsets.only(left: 20.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,

@@ -9,7 +9,6 @@ app = FastAPI()
 def appendCsvData(csvFile: Path, data: bytes) -> None:
     with csvFile.open("a") as f:
         lines = data.decode('utf-8').splitlines()[1:]
-        print(lines)
         f.writelines(lines)
 
 @app.get("/anomalies")

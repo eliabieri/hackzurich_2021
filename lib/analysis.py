@@ -25,6 +25,7 @@ class DataAnalyzer:
         events = constants.EVENTS_FILE.open()
         disruptions = constants.DISRUPTIONS_FILE.open()
         events = constants.EVENTS_FILE.open()
+        print("Analysis in progress")
         ## TODO analysis
         anomalies: List[Anomaly] = [
             Anomaly(

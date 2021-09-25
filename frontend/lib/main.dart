@@ -8,18 +8,21 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'map_data_provider.dart';
 
+final mapData = MapDataProvider();
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   final siemensColor = const Color.fromRGBO(0, 153, 153, 1.0);
 
-  const MyApp({Key? key}) : super(key: key);
+  final MapController _mapController = MapController();
+
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final mapData = MapDataProvider();
     return MaterialApp(
       title: "Siemens ZSL90 Predictive Maintenance",
       debugShowCheckedModeBanner: false,
@@ -37,13 +40,29 @@ class MyApp extends StatelessWidget {
               child: Builder(builder: (context) {
                 return IconButton(
                   icon: const Icon(Icons.upload_file),
-                  onPressed: () => showCupertinoModalBottomSheet(
-                    context: context,
-                    builder: (context) => const UploadData(),
-                  ),
+                  onPressed: () => showBarModalBottomSheet(
+                      expand: false, context: context, builder: (context) => const UploadData()),
                 );
               }),
             )
+          ],
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: UniqueKey(),
+              child: const Icon(Icons.zoom_out),
+              backgroundColor: siemensColor,
+              onPressed: () => _mapController.move(_mapController.center, _mapController.zoom - 1),
+            ),
+            const SizedBox(width: 10),
+            FloatingActionButton(
+              heroTag: UniqueKey(),
+              child: const Icon(Icons.zoom_in),
+              backgroundColor: siemensColor,
+              onPressed: () => _mapController.move(_mapController.center, _mapController.zoom + 1),
+            ),
           ],
         ),
         body: StreamBuilder(
@@ -61,6 +80,7 @@ class MyApp extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   FlutterMap(
+                    mapController: _mapController,
                     options: MapOptions(
                       center: LatLng(47.32913856887063, 8.12325467579632),
                       zoom: 10.0,

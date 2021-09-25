@@ -15,6 +15,7 @@ class Anomaly:
     lon: float
     type: AnomalyType
     severeness: float
+    distanceOnTrack: int
     detectedOn: datetime = datetime.now()
 
 class DataAnalyzer:
@@ -34,12 +35,14 @@ class DataAnalyzer:
                 lat=47.39562302092118,
                 lon=8.057479921589058,
                 type=AnomalyType.ANTENNA_DEGRADATION,
+                distanceOnTrack=49876,
                 severeness=0.2
             ),
             Anomaly(
                 lat=47.30757390295709,
                 lon=8.080110130195234,
                 type=AnomalyType.INTERFERENCE,
+                distanceOnTrack=113095,
                 severeness=0.8
             )
         ]
@@ -55,6 +58,7 @@ class DataAnalyzer:
                     "lon": anomaly.lon,
                     "type": anomaly.type,
                     "severeness": anomaly.severeness,
+                    "distanceOnTrack": anomaly.distanceOnTrack,
                     "detectedOn": anomaly.detectedOn.isoformat(),
                 } for anomaly in anomalies]
             }))

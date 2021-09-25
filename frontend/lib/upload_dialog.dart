@@ -9,8 +9,7 @@ class UploadData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(padding: const EdgeInsets.all(30), children: [
+    return ListView(shrinkWrap: true, padding: const EdgeInsets.all(30), children: [
       Text(
         "Upload new data",
         style: Theme.of(context).textTheme.headline4,
@@ -35,7 +34,7 @@ class UploadData extends StatelessWidget {
             });
           },
           child: const Text("Add data files"))
-    ]));
+    ]);
   }
 
   Future<void> uploadData(FilePickerResult? filePickerResult) async {

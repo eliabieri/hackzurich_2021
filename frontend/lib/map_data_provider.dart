@@ -7,6 +7,7 @@ class Anomaly {
   final double lon;
   final String type;
   final double severeness;
+  final int distanceOnTrack;
   final DateTime detectedOn;
 
   const Anomaly(
@@ -14,6 +15,7 @@ class Anomaly {
       required this.lon,
       required this.type,
       required this.severeness,
+      required this.distanceOnTrack,
       required this.detectedOn});
 }
 
@@ -35,6 +37,7 @@ class MapDataProvider {
               lon: e["lon"],
               type: e["type"],
               severeness: e["severeness"],
+              distanceOnTrack: e["distanceOnTrack"],
               detectedOn: DateTime.parse(e["detectedOn"])))
           .toList();
       _controller?.add(anomalies);

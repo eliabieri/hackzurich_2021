@@ -96,6 +96,9 @@ class MyApp extends StatelessWidget {
                       height: 45,
                       width: 150,
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [

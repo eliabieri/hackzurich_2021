@@ -1,1 +1,29 @@
-{"anomalies": [{"lat": 47.39562302092118, "lon": 8.057479921589058, "type": "ANTENNA_DEGRADATION", "severeness": 0.2, "distanceOnTrack": 49876, "detectedOn": "2021-09-25T13:48:32.289183"}, {"lat": 47.30757390295709, "lon": 8.080110130195234, "type": "INTERFERENCE", "severeness": 0.8, "distanceOnTrack": 113095, "detectedOn": "2021-09-25T13:48:32.289183"}]}
+{
+    "anomalies": [
+        {
+            "lat": 47.39562302092118,
+            "lon": 8.057479921589058,
+            "type": "ANTENNA_DEGRADATION",
+            "severeness": 0.6,
+            "distanceOnTrack": 49876,
+            "detectedOn": "2021-09-25T13:48:32.289183"
+        },
+        {
+            "lat": 47.30757390295709,
+            "lon": 8.080110130195234,
+            "type": "INTERFERENCE",
+            "severeness": 0.8,
+            "distanceOnTrack": 113095,
+            "detectedOn": "2021-09-25T13:48:32.289183"
+        },
+        {
+            "lat": 47.32757390295709,
+            "lon": 8.090110130195234,
+            "type": "INTERFERENCE",
+            "severeness": 0.2,
+            "distanceOnTrack": 113095,
+            "detectedOn": "2021-09-25T13:48:32.289183"
+        }
+
+    ]
+}

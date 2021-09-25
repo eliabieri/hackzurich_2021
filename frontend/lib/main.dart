@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/polyline.dart';
 import 'package:frontend/upload_dialog.dart';
@@ -33,12 +34,25 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: siemensColor,
+          fontFamily: "Siemens",
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(siemensColor)))),
       home: Scaffold(
         appBar: AppBar(
-          title: const AutoSizeText("Siemens ZSL90 Predictive Maintenance", maxLines: 1),
-          backgroundColor: siemensColor,
+          title: Column(
+            children: [
+              SvgPicture.asset(
+                "assets/siemens-logo.svg",
+                height: 20,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text("ZSL90 Predictive Maintenance Tool",
+                  style: TextStyle(color: siemensColor, fontSize: 14)),
+            ],
+          ),
+          backgroundColor: Colors.white,
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),

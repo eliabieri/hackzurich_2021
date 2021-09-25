@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,7 +10,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 Color _colorFromSeverity(double severity) {
   if (severity < 0.4) {
-    return Colors.grey.shade200;
+    return Colors.grey.shade300;
   }
   if (severity < 0.7) {
     return Colors.yellow;
@@ -94,16 +95,20 @@ class AnomalyMarker extends Marker {
               child: Center(
                 child: SizedBox(
                   width: 45,
-                  child: Card(
-                    shape: const CircleBorder(),
-                    color: _colorFromSeverity(anomaly.severeness),
-                    elevation: 15,
-                    child: Center(
-                      child: FaIcon(
-                        anomaly.type == "INTERFERENCE"
-                            ? FontAwesomeIcons.broadcastTower
-                            : FontAwesomeIcons.waveSquare,
-                        size: 12.0,
+                  child: FadeIn(
+                    duration: const Duration(milliseconds: 900),
+                    delay: const Duration(milliseconds: 400),
+                    child: Card(
+                      shape: const CircleBorder(),
+                      color: _colorFromSeverity(anomaly.severeness),
+                      elevation: 15,
+                      child: Center(
+                        child: FaIcon(
+                          anomaly.type == "INTERFERENCE"
+                              ? FontAwesomeIcons.broadcastTower
+                              : FontAwesomeIcons.waveSquare,
+                          size: 12.0,
+                        ),
                       ),
                     ),
                   ),

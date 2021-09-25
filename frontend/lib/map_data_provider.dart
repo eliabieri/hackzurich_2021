@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-class Anomaly {
+class Anomaly extends Equatable {
   final double lat;
   final double lon;
   final String type;
@@ -17,10 +19,14 @@ class Anomaly {
       required this.severeness,
       required this.distanceOnTrack,
       required this.detectedOn});
+
+  @override
+  List<Object> get props => [lat, lon, type, severeness, distanceOnTrack, detectedOn];
 }
 
 class MapDataProvider {
   StreamController<List<Anomaly>>? _controller;
+  List<Anomaly> anomalies = [];
 
   MapDataProvider() {
     _controller = StreamController<List<Anomaly>>();
@@ -31,7 +37,7 @@ class MapDataProvider {
     try {
       final resp = await http.get(Uri.parse("http://127.0.0.1:8000/anomalies"));
       final data = jsonDecode(resp.body) as Map<String, dynamic>;
-      final anomalies = List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>))
+      final newAnomalies = List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>))
           .map((e) => Anomaly(
               lat: e["lat"],
               lon: e["lon"],
@@ -40,7 +46,10 @@ class MapDataProvider {
               distanceOnTrack: e["distanceOnTrack"],
               detectedOn: DateTime.parse(e["detectedOn"])))
           .toList();
-      _controller?.add(anomalies);
+      if (!listEquals(newAnomalies, anomalies)) {
+        anomalies = newAnomalies;
+        _controller?.add(anomalies);
+      }
     } catch (e) {
       print(e);
     }

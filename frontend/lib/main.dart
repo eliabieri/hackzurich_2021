@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_picker/Picker.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(siemensColor)))),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Siemens ZSL90 Predictive Maintenance"),
+          title: const AutoSizeText("Siemens ZSL90 Predictive Maintenance", maxLines: 1),
           backgroundColor: siemensColor,
           actions: [
             Padding(

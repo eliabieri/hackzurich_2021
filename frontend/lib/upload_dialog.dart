@@ -14,6 +14,10 @@ class UploadData extends StatelessWidget {
         "Upload new data",
         style: Theme.of(context).textTheme.headline4,
       ),
+      const SizedBox(
+        height: 20,
+      ),
+      const Text("Choose events.csv, disruptions.csv and rssi.csv"),
       const SizedBox(height: 40),
       ElevatedButton(
           onPressed: () async {
@@ -24,13 +28,20 @@ class UploadData extends StatelessWidget {
               withReadStream: true,
               allowedExtensions: ['csv'],
             );
-            await showProgress(context, () => uploadData(result))
-                .catchError((error) => showToast("An error occured: $error",
-                    context: context, backgroundColor: Colors.red))
-                .then((value) {
-              showToast("Successfully uploaded data. Analysis in progress",
-                  context: context, backgroundColor: Colors.green);
+            await showProgress(context, () => uploadData(result)).then((value) {
+              showToast(
+                "Successfully uploaded data. Analysis in progress",
+                context: context,
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 4),
+              );
               Navigator.of(context).pop();
+            }).catchError((error) {
+              print("Caught error");
+              showToast("An error occured: $error",
+                  context: context,
+                  duration: const Duration(seconds: 4),
+                  backgroundColor: Colors.red);
             });
           },
           child: const Text("Add data files"))
@@ -78,7 +89,7 @@ class UploadData extends StatelessWidget {
         throw Exception("Status code is not 200. Got ${result.statusCode}");
       }
     } catch (e, stackTrace) {
-      print(e);
+      print("Error while uploading: $e");
       return Future.error(e, stackTrace);
     }
   }

@@ -1,27 +1,14 @@
 {
     "anomalies": [
         {
-            "lat": 47.39562302092118,
-            "lon": 8.057479921589058,
+            "lat1": 47.39562302092118,
+            "lon1": 8.057479921589058,
+            "lat2": 47.39562302092118,
+            "lon2": 8.057479921589058,
+            "peak": true,
             "type": "ANTENNA_DEGRADATION",
             "severeness": 0.6,
             "distanceOnTrack": 49876,
-            "detectedOn": "2021-09-25T13:48:32.289183"
-        },
-        {
-            "lat": 47.331747691796565,
-            "lon": 8.054658027649117,
-            "type": "INTERFERENCE",
-            "severeness": 0.8,
-            "distanceOnTrack": 113095,
-            "detectedOn": "2021-09-25T13:48:32.289183"
-        },
-        {
-            "lat": 47.291918453508735,
-            "lon": 8.13126407479584,
-            "type": "INTERFERENCE",
-            "severeness": 0.2,
-            "distanceOnTrack": 113095,
             "detectedOn": "2021-09-25T13:48:32.289183"
         }
 

@@ -9,7 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-Color _colorFromSeverity(double severity) {
+Color colorFromSeverity(double severity) {
   if (severity < 0.4) {
     return Colors.grey.shade300;
   }
@@ -25,7 +25,7 @@ class AnomalyMarker extends Marker {
       : super(
           width: 80.0,
           height: 80.0,
-          point: LatLng(anomaly.lat, anomaly.lon),
+          point: LatLng(anomaly.lat1, anomaly.lon1),
           builder: (context) {
             return GestureDetector(
               onTap: () => showDialog(
@@ -46,7 +46,7 @@ class AnomalyMarker extends Marker {
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3
-                                    ?.copyWith(color: _colorFromSeverity(anomaly.severeness)),
+                                    ?.copyWith(color: colorFromSeverity(anomaly.severeness)),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -85,7 +85,7 @@ class AnomalyMarker extends Marker {
                               ElevatedButton(
                                   child: const Text("Get directions"),
                                   onPressed: () =>
-                                      MapsLauncher.launchCoordinates(anomaly.lat, anomaly.lon)),
+                                      MapsLauncher.launchCoordinates(anomaly.lat1, anomaly.lon1)),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -101,7 +101,7 @@ class AnomalyMarker extends Marker {
                     delay: const Duration(milliseconds: 400),
                     child: Card(
                       shape: const CircleBorder(),
-                      color: _colorFromSeverity(anomaly.severeness),
+                      color: colorFromSeverity(anomaly.severeness),
                       elevation: 15,
                       child: Center(
                         child: Padding(

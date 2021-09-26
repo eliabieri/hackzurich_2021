@@ -12,11 +12,14 @@ class AnomalyType(str, Enum):
 
 @dataclass
 class Anomaly:
-    lat: float
-    lon: float
+    lat1: float
+    lon1: float
+    lat2: float
+    lon2: float
     type: AnomalyType
     severeness: float
     distanceOnTrack: int
+    peak: bool
     detectedOn: datetime = datetime.now()
 
 class DataAnalyzer:
@@ -33,29 +36,7 @@ class DataAnalyzer:
         time.sleep(4)
         print("Analysis finished")
         ## TODO analysis
-        anomalies: List[Anomaly] = [
-            Anomaly(
-                lat=47.39562302092118,
-                lon=8.057479921589058,
-                type=AnomalyType.ANTENNA_DEGRADATION,
-                distanceOnTrack=4976,
-                severeness=0.2
-            ),
-            Anomaly(
-                lat=47.331747691796565,
-                lon=8.054658027649117,
-                type=AnomalyType.INTERFERENCE,
-                distanceOnTrack=11095,
-                severeness=0.8
-            ),
-            Anomaly(
-                lat=47.291918453508735,
-                lon=8.13126407479584,
-                type=AnomalyType.INTERFERENCE,
-                distanceOnTrack=31094,
-                severeness=0.6
-            )
-        ]
+        anomalies: List[Anomaly] = []
         cls._writeAnomalyFile(anomalies)
 
     @staticmethod
@@ -64,9 +45,12 @@ class DataAnalyzer:
             ## Ugly hack to serialize dataclass
             f.write(json.dumps({
                 "anomalies": [{
-                    "lat": anomaly.lat,
-                    "lon": anomaly.lon,
+                    "lat1": anomaly.lat1,
+                    "lon1": anomaly.lon1,
+                    "lat2": anomaly.lat2,
+                    "lon2": anomaly.lon2,
                     "type": anomaly.type,
+                    "peak": anomaly.peak,
                     "severeness": anomaly.severeness,
                     "distanceOnTrack": anomaly.distanceOnTrack,
                     "detectedOn": anomaly.detectedOn.isoformat(),

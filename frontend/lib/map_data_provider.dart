@@ -5,23 +5,30 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class Anomaly extends Equatable {
-  final double lat;
-  final double lon;
+  final double lat1;
+  final double lon1;
+  final double lat2;
+  final double lon2;
+  final bool peak;
   final String type;
   final double severeness;
   final int distanceOnTrack;
   final DateTime detectedOn;
 
   const Anomaly(
-      {required this.lat,
-      required this.lon,
+      {required this.lat1,
+      required this.lon1,
+      required this.lat2,
+      required this.lon2,
+      required this.peak,
       required this.type,
       required this.severeness,
       required this.distanceOnTrack,
       required this.detectedOn});
 
   @override
-  List<Object> get props => [lat, lon, type, severeness, distanceOnTrack, detectedOn];
+  List<Object> get props =>
+      [lat1, lon1, lat2, lon2, peak, type, severeness, distanceOnTrack, detectedOn];
 }
 
 class MapDataProvider {
@@ -39,8 +46,11 @@ class MapDataProvider {
       final data = jsonDecode(resp.body) as Map<String, dynamic>;
       final newAnomalies = List<Map<String, dynamic>>.from((data["anomalies"] as List<dynamic>))
           .map((e) => Anomaly(
-              lat: e["lat"],
-              lon: e["lon"],
+              lat1: e["lat1"],
+              lon1: e["lon1"],
+              lat2: e["lat2"],
+              lon2: e["lon2"],
+              peak: e["peak"],
               type: e["type"],
               severeness: e["severeness"],
               distanceOnTrack: e["distanceOnTrack"],

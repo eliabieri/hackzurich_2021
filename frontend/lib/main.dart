@@ -102,32 +102,27 @@ class MyApp extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Consumer<ValueNotifier<double>>(builder: (context, minSeverity, _) {
+                          final layerOptions = <LayerOptions>[
+                            TileLayerOptions(
+                              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                              subdomains: ['a', 'b', 'c'],
+                            ),
+                          ];
+                          layerOptions.addAll(_generatePolylines(snapshot.data!));
+                          layerOptions.add(MarkerLayerOptions(
+                              markers: snapshot.data
+                                      ?.where((element) =>
+                                          element.severeness >= minSeverity.value && element.peak)
+                                      .map((e) => AnomalyMarker(anomaly: e))
+                                      .toList() ??
+                                  []));
                           return FlutterMap(
                             mapController: _mapController,
                             options: MapOptions(
                               center: LatLng(47.32913856887063, 8.12325467579632),
                               zoom: 11.0,
                             ),
-                            layers: [
-                              TileLayerOptions(
-                                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                subdomains: ['a', 'b', 'c'],
-                              ),
-                              PolylineLayerOptions(polylines: [
-                                Polyline(
-                                    points: polylineTrack,
-                                    color: Colors.deepPurple,
-                                    strokeWidth: 3.0,
-                                    isDotted: true)
-                              ]),
-                              MarkerLayerOptions(
-                                  markers: snapshot.data
-                                          ?.where(
-                                              (element) => element.severeness >= minSeverity.value)
-                                          .map((e) => AnomalyMarker(anomaly: e))
-                                          .toList() ??
-                                      []),
-                            ],
+                            layers: layerOptions,
                           );
                         }),
                         Positioned(
@@ -182,6 +177,17 @@ class MyApp extends StatelessWidget {
             }),
       ),
     );
+  }
+
+  List<LayerOptions> _generatePolylines(List<Anomaly> anomalies) {
+    return List.generate(
+        anomalies.length,
+        (index) => PolylineLayerOptions(polylines: [
+              Polyline(points: [
+                LatLng(anomalies[index].lat1, anomalies[index].lon1),
+                LatLng(anomalies[index].lat2, anomalies[index].lon2)
+              ], color: colorFromSeverity(anomalies[index].severeness), strokeWidth: 3.0)
+            ]));
   }
 
   void _showFilterPopup(BuildContext context, ValueNotifier<double> minSeverity) {

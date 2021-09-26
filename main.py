@@ -6,6 +6,7 @@ from rich import print
 import threading
 import json
 
+threading.Thread(target=DataAnalyzer.analyzeData).start()
 app = FastAPI()
 
 def appendCsvData(csvFile: Path, data: bytes) -> None:

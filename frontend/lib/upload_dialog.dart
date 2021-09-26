@@ -60,10 +60,10 @@ class UploadData extends StatelessWidget {
       );
       Map<String, String> headers = {"Content-type": "multipart/form-data"};
       final velocities =
-          filePickerResult.files.firstWhere((element) => "velocities.csv" == element.name);
-      final rssi = filePickerResult.files.firstWhere((element) => "rssi.csv" == element.name);
+          filePickerResult.files.firstWhere((element) => element.name.contains("velocities"));
+      final rssi = filePickerResult.files.firstWhere((element) => element.name.contains("rssi"));
       final disruptions =
-          filePickerResult.files.firstWhere((element) => "disruptions.csv" == element.name);
+          filePickerResult.files.firstWhere((element) => element.name.contains("disruptions"));
       request.files.addAll([
         http.MultipartFile(
           'velocities',

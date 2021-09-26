@@ -26,10 +26,10 @@ async def anomalies(response: Response) -> None:
 @app.post("/data")
 async def data(
     response: Response,
-    events: UploadFile = File(...),
+    velocities: UploadFile = File(...),
     disruptions: UploadFile = File(...),
     rssi: UploadFile = File(...)):
-    appendCsvData(constants.EVENTS_FILE, await events.read())
+    appendCsvData(constants.VELOCITY_FILE, await velocities.read())
     appendCsvData(constants.DISRUPTIONS_FILE, await disruptions.read())
     appendCsvData(constants.RSSI_FILE, await rssi.read())
     threading.Thread(target=DataAnalyzer.analyzeData).start()

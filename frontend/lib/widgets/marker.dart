@@ -19,6 +19,16 @@ Color colorFromSeverity(double severity) {
   return Colors.red;
 }
 
+Color colorFromSeverityPolyline(double severity) {
+  if (severity < 0.4) {
+    return Colors.black;
+  }
+  if (severity < 0.7) {
+    return Colors.yellow;
+  }
+  return Colors.red;
+}
+
 class AnomalyMarker extends Marker {
   final Anomaly anomaly;
   AnomalyMarker({Key? key, required this.anomaly})
@@ -68,7 +78,7 @@ class AnomalyMarker extends Marker {
                                 height: 10,
                               ),
                               Text(
-                                "Severeness: ${anomaly.severeness}",
+                                "Severity: ${anomaly.severeness.toStringAsFixed(1)}",
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               const SizedBox(

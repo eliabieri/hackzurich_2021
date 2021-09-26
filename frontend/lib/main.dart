@@ -183,10 +183,14 @@ class MyApp extends StatelessWidget {
     return List.generate(
         anomalies.length,
         (index) => PolylineLayerOptions(polylines: [
-              Polyline(points: [
-                LatLng(anomalies[index].lat1, anomalies[index].lon1),
-                LatLng(anomalies[index].lat2, anomalies[index].lon2)
-              ], color: colorFromSeverity(anomalies[index].severeness), strokeWidth: 3.0)
+              Polyline(
+                  points: [
+                    LatLng(anomalies[index].lat1, anomalies[index].lon1),
+                    LatLng(anomalies[index].lat2, anomalies[index].lon2)
+                  ],
+                  color: colorFromSeverityPolyline(anomalies[index].severeness),
+                  strokeWidth: 3.0,
+                  isDotted: true)
             ]));
   }
 

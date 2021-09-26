@@ -11,7 +11,7 @@ with open('dataInspection/mean_variance.json', "r") as f:
 # %% import rssi
 def mergeData(rssiPath, veloPath, disrPath):
     rssi = pd.read_csv(rssiPath)
-    rssi = rssi.loc[:, ['DateTime', 'PositionNoLeap',
+    rssi = rssi.loc[:, ['DateTime', 'PositionNoLeap', 'Latitude', 'Longitude',
                         'A1_ValidTel', 'A2_ValidTel', 'A2_RSSI']]
     rssi.rename(columns={'PositionNoLeap':'Position'}, inplace=True)
     
@@ -104,3 +104,10 @@ meanGroupVals.loc[0:1] = 0
 # %% find peaks of anomalies:
 telPeaks = find_peaks(meanGroupVals.telDiff.values, height=1, distance=30)
 rssiPeaks = find_peaks(meanGroupVals.rssiDiff.values, height=1, distance=30)
+
+# check if telPeak is actually also a rssi peak
+peakDuplicate = []
+for tp in telPeaks[0]:
+    if (np.abs(rssiPeaks[0]-tp) < 15).any():
+        peakDuplicate.append(tp)
+

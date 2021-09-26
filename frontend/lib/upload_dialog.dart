@@ -17,14 +17,14 @@ class UploadData extends StatelessWidget {
       const SizedBox(
         height: 20,
       ),
-      const Text("Choose events.csv, disruptions.csv and rssi.csv"),
+      const Text("Choose velocities.csv, disruptions.csv and rssi.csv"),
       const SizedBox(height: 40),
       ElevatedButton(
           onPressed: () async {
             final result = await FilePicker.platform.pickFiles(
               type: FileType.custom,
               allowMultiple: true,
-              dialogTitle: "Choose events.csv, disruptions.csv and rssi.csv",
+              dialogTitle: "Choose velocities.csv, disruptions.csv and rssi.csv",
               withReadStream: true,
               allowedExtensions: ['csv'],
             );
@@ -59,16 +59,17 @@ class UploadData extends StatelessWidget {
         Uri.parse("http://127.0.0.1:8000/data"),
       );
       Map<String, String> headers = {"Content-type": "multipart/form-data"};
-      final events = filePickerResult.files.firstWhere((element) => "events.csv" == element.name);
+      final velocities =
+          filePickerResult.files.firstWhere((element) => "velocities.csv" == element.name);
       final rssi = filePickerResult.files.firstWhere((element) => "rssi.csv" == element.name);
       final disruptions =
           filePickerResult.files.firstWhere((element) => "disruptions.csv" == element.name);
       request.files.addAll([
         http.MultipartFile(
-          'events',
-          events.readStream!,
-          events.size,
-          filename: events.name,
+          'velocities',
+          velocities.readStream!,
+          velocities.size,
+          filename: velocities.name,
         ),
         http.MultipartFile(
           'rssi',

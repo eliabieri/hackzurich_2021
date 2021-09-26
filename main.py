@@ -10,8 +10,8 @@ threading.Thread(target=DataAnalyzer.analyzeData).start()
 app = FastAPI()
 
 def appendCsvData(csvFile: Path, data: bytes) -> None:
-    with csvFile.open("a") as f:
-        lines = data.decode('utf-8').splitlines()[1:]
+    with csvFile.open("w") as f:
+        lines = data.decode('utf-8').splitlines()
         f.write("\n")
         f.writelines(f'{s}\n' for s in lines)
 

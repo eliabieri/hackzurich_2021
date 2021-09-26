@@ -117,9 +117,7 @@ class DataAnalyzer:
 
     @staticmethod
     def _mergeData(rssiPath, veloPath, disrPath):
-        print(rssiPath)
         rssi = pd.read_csv(rssiPath)
-        print(rssi.columns)
         rssi = rssi.loc[:, ['DateTime', 'PositionNoLeap','Latitude', 'Longitude',
                             'A1_ValidTel', 'A2_ValidTel', 'A2_RSSI']]
         rssi.rename(columns={'PositionNoLeap':'Position'}, inplace=True)
@@ -161,7 +159,6 @@ class DataAnalyzer:
         # create path chunks
         nChunks = 300
         chunkSize =(df.Position.max()-df.Position.min()) // 300
-        print(f'Chunk Size: {chunkSize/10} m')
         df["posChunk"] = (df.Position-df.Position.min())+1
         df.posChunk = (df.posChunk//chunkSize).astype(int)
 
@@ -182,6 +179,5 @@ class DataAnalyzer:
         df.loc[df.Direction.diff() != 0, 'TimeChunk'] = np.arange((df.Direction.diff() != 0).sum())
         df.TimeChunk.fillna(method='pad', inplace=True)
         df.TimeChunk.fillna(0, inplace=True)
-        print("Number of time chunks: ", (df.Direction.diff() != 0).sum())
         return df
 

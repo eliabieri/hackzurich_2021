@@ -12,7 +12,7 @@ The Devpost writeup can be found [here](https://devpost.com/software/zsl90-predi
 ### Backend
 ```bash
 # Create conda environment
-conda env install
+conda env create
 # Activate conda environment
 conda activate hz_2021
 # Run backend

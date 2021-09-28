@@ -47,7 +47,7 @@ With the currently available data, only classical anomaly detection can be appli
 
 First, the timeline is separated into individual rides. The position signal seems to be read from a GPS and can therefore have fluctuations and the train does necessarily always drive all the way to the last station. For this reason, we used the moving average of the derivative of the position to determine in which direction the train is moving and then separate the rides when the direction is changing. 
 
-![dataOverview](.\doc\dataOverview.png)
+![dataOverview](./doc/dataOverview.png)
 
 
 

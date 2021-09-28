@@ -1,5 +1,6 @@
 ## Disclaimer ⚠️
 This code was written during a Hackathon. It's ugly, it's faulty and it's not save for consumption  
+The challenge description is [here](doc/Workshop_Siemens_Mobility_20210924.pdf)   
 The Devpost writeup can be found [here](https://devpost.com/software/zsl90-predictive-maintenance-platform)
 
 ## Installation

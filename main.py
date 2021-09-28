@@ -1,13 +1,23 @@
 from lib import constants
 from lib.analysis import DataAnalyzer
 from fastapi import FastAPI, Response, File, UploadFile, status
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from rich import print
 import threading
 import json
 
-threading.Thread(target=DataAnalyzer.analyzeData).start()
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+threading.Thread(target=DataAnalyzer.analyzeData).start()
+
 
 def appendCsvData(csvFile: Path, data: bytes) -> None:
     with csvFile.open("w") as f:

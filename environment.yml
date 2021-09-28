@@ -1,0 +1,13 @@
+name: hz_2021
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - fastapi
+  - uvicorn
+  - rich
+  - pandas
+  - numpy
+  - scikit-learn
+  - python-multipart
+prefix: /opt/homebrew/anaconda3/envs/main

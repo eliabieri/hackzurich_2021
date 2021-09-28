@@ -50,7 +50,7 @@ We believe that this can be very reliable however, as this method can 'learn' fr
 It was not that straight forward as it might seem. The code also has to be relatively efficient, as the dataset is quite large.     
 
 First, the timeline is separated into individual rides. The position signal seems to be read from a GPS and can therefore have fluctuations, and the train does necessarily always drive all the way to the last station.   
-For this reason, we used the moving average of the derivative of the position to determine in which direction the train is moving and then separate the rides when the direction is changing. 
+For this reason, we calculated the moving average of the derivative of the position to determine in which direction the train is moving and then separate the rides when the direction is changing. 
 
 ![dataOverview](./doc/dataOverview.png)
 
@@ -58,10 +58,9 @@ For this reason, we used the moving average of the derivative of the position to
 
 Analysis of the incidents showed that the problem always occurred over a certain range on the track.    
 This range could be represented using a Gaussian curve, but instead we just cut the track into 300 chunks of ~100m length (faster and works probably just as well).    
-Anomalies are then detected in each chunk using previously calculated mean and variance of voltage and package loss.    
-Data from more recent rides is weighted more heavily to detect anomalies faster.    
+Anomalies are then detected in each chunk using previously calculated mean and variance of signal strength and telegram loss. Data from more recent rides is weighted more heavily to detect anomalies faster.    
 
 The results from all 300 sections are then sent to the frontend. In addition, peaks are calculated if an outlier threshold (called "severance score" in the frontend) is reached.   
 If multiple chunks reach the threshold in the range of 3 km, only the one with the highest value is considered a peak.  
-This peak values are also send to the frontend and visualized. When the threshold is reached only for the package loss but not for the voltage, it is assumed that is likely an interference problem.   
+This peak values are also send to the frontend and visualized. When the threshold is reached only for the telegram loss but not for the signal strength, it is assumed that is likely an interference problem.   
 The threshold were determined using the 138 incidents in the dataset.
